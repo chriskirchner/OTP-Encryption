@@ -1,0 +1,31 @@
+#!/bin/bash
+
+CXX="gcc"
+CXXFLAGS="-Wall -g"
+SRC=(encryption.c communication.c otp_dec.c otp_dec_d.c otp_enc.c otp_enc_d.c)
+PROGS=(otp_dec otp_dec_d otp_enc otp_enc_d)
+HEADERS=(encryption communication)
+OBJS="encryption.o communication.o"
+
+for prog in ${PROGS[@]}; do
+	if [ -f "$prog" ]; then
+		rm "$prog"
+	fi
+done
+
+for src in ${SRC[@]}; do
+	echo "$CXX $CXXFLAGS -c $src"
+	$CXX $CXXFLAGS -c "$src" 
+done
+
+for prog in ${PROGS[@]}; do
+	echo "$CXX $OBJS $prog.o -o $prog"
+	$CXX $OBJS "$prog.o" -o "$prog"
+done
+
+echo "gcc -o keygen keygen.c"
+if [ -f "keygen" ]; then
+	rm keygen
+fi
+
+gcc -o keygen keygen.c

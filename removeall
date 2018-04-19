@@ -1,0 +1,5 @@
+#!/bin/bash
+rm *.o 
+rm otp_dec otp_dec_d
+rm otp_enc otp_enc_d
+rm keygen
